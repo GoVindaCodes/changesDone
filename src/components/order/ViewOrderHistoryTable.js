@@ -58,8 +58,8 @@ const ViewOrderHistoryTable = ({ order, currency, t, lang }) => {
               {item?.seller?.name.en
                 ? item?.seller?.name[lang]
                 : item?.seller?.name
-                ? item?.seller?.name
-                : item?.seller?.name.en}
+                  ? item?.seller?.name
+                  : item?.seller?.name.en}
             </TableCell>
             <TableCell className="px-6 py-1 whitespace-nowrap font-bold text-center">
               {item.quantity}{' '}

@@ -28,10 +28,11 @@ import requests from "services/httpService";
 import CouponServices from "services/CouponServices";
 import SettingServices from "services/SettingServices";
 import { showingTranslateValue } from "utils/translate";
+import { showDateFormat } from "utils/dateFormate";
 // import { showingTranslateValue } from "utils/translate";
 // import { showDateFormat } from "utils/dateFormate";
 
-const CouponTable = ({ lang, isCheck, setIsCheck }) => {
+const CouponTable = ({ lang, isCheck, setIsCheck, coupons }) => {
   const { data, loading } = useAsync(CouponServices.getAllCoupons);
 
   // commeneted just for now here for you sir
@@ -39,7 +40,7 @@ const CouponTable = ({ lang, isCheck, setIsCheck }) => {
 
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer(data);
   // const { data, loading } = useAsync(CouponServices.getAllCoupons);
-  // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
+  const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
   // console.log("coupons sir :", coupons)
   // console.log("coupons sir 1 :", setUpdatedCoupons)
   const handleClick = (e) => {
@@ -49,21 +50,21 @@ const CouponTable = ({ lang, isCheck, setIsCheck }) => {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
   };
-  const [coupons, setCoupons] = useState([]);
-  // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching Coupons...");
-        const response = await requests.get('/api/coupon');
-        console.log("Coupons fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // const [coupons, setCoupons] = useState([]);
+  // // console.log("allID : ", allId)
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching Coupons...");
+  //       const response = await requests.get('/api/coupon');
+  //       console.log("Coupons fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
   // const currency = globalSetting?.default_currency || "$";
 
   // useEffect(() => {
@@ -92,7 +93,7 @@ const CouponTable = ({ lang, isCheck, setIsCheck }) => {
       )}
 
       <TableBody>
-        {data?.map((coupon, i) => (
+        {coupons?.map((coupon, i) => (
           <TableRow key={i + 1}>
             <TableCell>
               <CheckBox
@@ -165,7 +166,11 @@ const CouponTable = ({ lang, isCheck, setIsCheck }) => {
                   coupon.startTime,
                   globalSetting?.default_date_format
                 )} */}
-                {coupon.createdAt}
+                {showDateFormat(
+                  coupon.updatedAt,
+                  globalSetting?.default_date_format
+                )}
+                {/* {coupon.createdAt} */}
               </span>
             </TableCell>
 
@@ -176,7 +181,11 @@ const CouponTable = ({ lang, isCheck, setIsCheck }) => {
                   coupon.endTime,
                   globalSetting?.default_date_format
                 )} */}
-                {coupon.updatedAt}
+                {showDateFormat(
+                  coupon.updatedAt,
+                  globalSetting?.default_date_format
+                )}
+                {/* {coupon.updatedAt} */}
               </span>
             </TableCell>
 

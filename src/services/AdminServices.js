@@ -311,6 +311,7 @@ const AdminServices = {
   },
 
   forgetPassword: async (body) => {
+    // console.log("hi: ", body)
     return requests.put("/api/admin/forget-password", body);
   },
 
@@ -332,7 +333,8 @@ const AdminServices = {
   },
 
   updateStaff: async (id, body) => {
-    return requests.put(`/api/admin/update/${id}`, body);
+    // return requests.put(`/api/admin/update/${id}`, body);
+    return requests.put(`/api/admin/${id}`, body);
   },
 
   updateStaffStatus: async (id, body) => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
-
 import Error from "components/form/Error";
 import useLoginSubmit from "hooks/useLoginSubmit";
 import LabelArea from "components/form/LabelArea";

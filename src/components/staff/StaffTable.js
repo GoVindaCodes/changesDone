@@ -33,25 +33,25 @@ const StaffTable = ({ staffs, lang }) => {
 
   const [coupons, setCoupons] = useState([]);
   // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching Coupons...");
-        const response = await requests.get('/api/admin');
-        console.log("Coupons fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching Coupons...");
+  //       const response = await requests.get('/api/admin');
+  //       console.log("Coupons fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
   const { globalSetting } = useFilter();
   console.log("id: in stafftable ", data)
   return (
     <>
       <DeleteModal id={serviceId} title={title} />
-      {/* Added By: Govinda 25/3/2024 */}
+      {/* Added By: Govinda 25/3/20 24 */}
       <MainDrawer>
         <StaffDrawer id={serviceId} />
       </MainDrawer>
@@ -83,7 +83,7 @@ const StaffTable = ({ staffs, lang }) => {
 
             <TableCell>
               <span className="text-sm">
-                {dayjs(staff.joiningData).format("DD/MM/YYYY")}
+                {/* {dayjs(staff.joiningData).format("DD/MM/YYYY")}  */}
                 {showDateFormat(
                   staff.joiningData,
                   globalSetting.default_date_format
@@ -95,17 +95,25 @@ const StaffTable = ({ staffs, lang }) => {
               <span className="text-sm font-semibold">{staff?.role}</span>
             </TableCell>
             <TableCell className="text-center text-xs">
+              <TableCell className="text-center">
+                <ActiveInActiveButton
+                  id={staff?._id}
+                  staff={staff}
+                  option="staff"
+                  status={staff.status}
+                />
+              </TableCell>
               <Status status={staff.status} />
             </TableCell>
 
-            <TableCell className="text-center">
+            {/* <TableCell className="text-center">
               <ActiveInActiveButton
                 id={staff?._id}
                 staff={staff}
                 option="staff"
                 status={staff.status}
               />
-            </TableCell>
+            </TableCell> */}
 
             <TableCell>
               <EditDeleteButton
@@ -115,8 +123,8 @@ const StaffTable = ({ staffs, lang }) => {
                 handleUpdate={handleUpdate}
                 handleModalOpen={handleModalOpen}
                 handleResetPassword={handleResetPassword}
-                title={staff.name}
-              // title={showingTranslateValue(staff?.name.en, lang)}
+                // title={staff.name}
+                title={showingTranslateValue(staff?.name.en, lang)}
               />
             </TableCell>
           </TableRow>

@@ -18,19 +18,19 @@ const CustomerOrderTable = ({ orders }) => {
   const { data, loading } = useAsync(CustomerServices.getAllCustomers);
   const { globalSetting } = useFilter(data);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching customerorders...");
-        const response = await requests.get('/api/customer');
-        console.log("customerOrders fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching customerorders...");
+  //       const response = await requests.get('/api/customer');
+  //       console.log("customerOrders fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
   // console.log("orders :", orders)
 
   // orders?.map((order) => { console.log("orders", order.) })

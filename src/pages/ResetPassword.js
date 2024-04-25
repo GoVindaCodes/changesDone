@@ -32,6 +32,7 @@ const ResetPassword = () => {
       .then((res) => {
         setLoading(false);
         notifySuccess(res.message);
+        window.location.href = "/login";
       })
       .catch((err) => {
         setLoading(false);

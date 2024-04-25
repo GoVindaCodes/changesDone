@@ -21,12 +21,13 @@ import CurrencyServices from "services/CurrencyServices";
 import { notifyError, notifySuccess } from "utils/toast";
 
 const DeleteModal = ({ allId, id, ids, setIsCheck, category, title, useParamId }) => {
+  // console.log("ID received in DeleteModal:", id);
   const { isModalOpen, closeModal, setIsUpdate } = useContext(SidebarContext);
   const { setServiceId } = useToggleDrawer();
   const location = useLocation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  console.log("id :", id)
+  // console.log("id :", id)
   const handleDelete = async () => {
     // return notifyError("CRUD operation is disabled for this option!");
     try {
@@ -112,6 +113,7 @@ const DeleteModal = ({ allId, id, ids, setIsCheck, category, title, useParamId }
           //   }
 
           const res = await CategoryServices.deleteCategory(id);
+          console.log('delete modal categorices', id)
           setIsUpdate(true);
           notifySuccess(res.message);
           closeModal();

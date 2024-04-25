@@ -17,7 +17,7 @@ const EditDeleteButton = ({
   children,
 }) => {
   const { t } = useTranslation();
-  console.log('edite delet button')
+  // console.log('edite delet button')
   return (
     <>
       <div className="flex justify-end text-right">
@@ -51,7 +51,7 @@ const EditDeleteButton = ({
         ) : (
           <button
             disabled={isCheck?.length > 0}
-            onClick={() => handleUpdate(id)}
+            onClick={() => handleUpdate(id, title)}
             className="p-2 cursor-pointer text-gray-400 hover:text-green-600 focus:outline-none"
           >
             <Tooltip

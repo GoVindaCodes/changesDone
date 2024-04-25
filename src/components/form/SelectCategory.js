@@ -61,32 +61,35 @@ import requests from "services/httpService";
 // import categoryData from "utils/categories";
 
 const SelectCategory = ({ setCategory, lang }) => {
-  const { data } = useAsync(CategoryServices.getAllCategories);
+  const { data } = useAsync(CategoryServices.getAllCategory);
   // const data = categoryData;
   // console.log('data category', data)
+  // data.forEach(element => {
+  //   console.log('data category', element.parent)
+  // });
   const { t } = useTranslation();
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching categories...");
-        const response = await requests.get('/api/category/all');
-        // console.log("Categories fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching categories...");
+  //       const response = await requests.get('/api/category/all');
+  //       // console.log("Categories fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
 
-    // // Polling mechanism
-    // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
+  //   // // Polling mechanism
+  //   // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
 
-    // // Clear interval on unmount
-    // return () => clearInterval(intervalId);
-  }, []);
+  //   // // Clear interval on unmount
+  //   // return () => clearInterval(intervalId);
+  // }, []);
   return (
     <>
       <Select
@@ -97,7 +100,7 @@ const SelectCategory = ({ setCategory, lang }) => {
           {t("Category")}
         </option>
         {/* {data?.map((cat) => ( */}
-        {categories?.map((cat) => (
+        {data?.map((cat) => (
           <option key={cat._id} value={cat._id}>
             {showingTranslateValue(cat?.parent, lang)}
           </option>

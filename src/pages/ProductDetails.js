@@ -40,7 +40,7 @@ const ProductDetails = () => {
 
   const { handleChangePage, totalResults, resultsPerPage, dataTable } =
     useFilter(data?.variants);
-  // console.log('data', data?.variants)
+  console.log('variants', data?.variants)
 
   useEffect(() => {
     if (!loading) {

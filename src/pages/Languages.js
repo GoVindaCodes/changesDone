@@ -50,21 +50,21 @@ const Languages = () => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
-  const [Languages, setLanguages] = useState([]);
-  // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching languages...");
-        const response = await requests.get('/api/language/show');
-        console.log("Languages fetched successfully:", response);
-        setLanguages(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // const [Languages, setLanguages] = useState([]);
+  // // console.log("allID : ", allId)
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching languages...");
+  //       const response = await requests.get('/api/language/show');
+  //       console.log("Languages fetched successfully:", response);
+  //       setLanguages(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
 
   // console.log("data-language", data);
 

@@ -64,21 +64,21 @@ const Currencies = () => {
   };
 
 
-  const [coupons, setCoupons] = useState([]);
+  // const [coupons, setCoupons] = useState([]);
   // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching Coupons...");
-        const response = await requests.get('/api/currency');
-        console.log("Coupons fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching Coupons...");
+  //       const response = await requests.get('/api/currency');
+  //       console.log("Coupons fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
 
   return (
     <>
@@ -150,7 +150,8 @@ const Currencies = () => {
           // <Loading loading={loading} />
           <TableLoading row={12} col={7} width={163} height={20} />
         ) : (
-          coupons.length !== 0 && (
+          data.length !== 0 && (
+            // coupons.length !== 0 && (
             <TableContainer className="mb-8 rounded-b-lg">
               <Table>
                 <TableHeader>
@@ -181,9 +182,10 @@ const Currencies = () => {
                     </TableCell>
                   </tr>
                 </TableHeader>
-
                 <CurrencyTable
-                  currency={data}
+                  data={data}
+                  // currency={data}
+                  currency={dataTable}
                   isCheck={isCheck}
                   setIsCheck={setIsCheck}
                 />

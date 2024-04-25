@@ -19,15 +19,17 @@ import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { FiZoomIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import CurrencyServices from "services/CurrencyServices";
 import ProductServices from "services/ProductServices";
 import requests from "services/httpService";
 import { showingTranslateValue } from "utils/translate";
 
 //internal import
 
-const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
+const ProductTable = ({ products, isCheck, setIsCheck, currency, lang, globalSetting }) => {
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
-  const { data, loading } = useAsync(ProductServices.getAllProducts);
+  // const { data, loading } = useAsync(ProductServices.getAllProducts);
+  // const { data, loading } = useAsync(CurrencyServices.getShowingCurrency);
 
   const handleClick = (e) => {
     const { id, checked } = e.target;
@@ -38,21 +40,21 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
   };
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("products customers detials...");
-        const response = await requests.get('/api/products');
-        console.log("products fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("products customers detials...");
+  //       const response = await requests.get('/api/products');
+  //       console.log("products fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
   return (
     <>
 
@@ -119,6 +121,7 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
               <span className="text-sm">
                 {/* {showingTranslateValue(product?.category.name.en, lang)} */}
                 {product?.parent}
+                {product?.category}
               </span>
             </TableCell>
 
@@ -143,7 +146,7 @@ const ProductTable = ({ products, isCheck, setIsCheck, currency, lang }) => {
             <TableCell>
               {/* new schema changes over here added by Govinda */}
               <span className="text-sm">{product.quantity}</span>
-              {/* <span className="text-sm">{product.stock}</span> */}
+              <span className="text-sm">{product.stock}</span>
             </TableCell>
             <TableCell>
               {product.stock > 0 ? (

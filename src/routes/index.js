@@ -1,3 +1,4 @@
+import ComposeEmail from "components/customer/ComposeEmail";
 import { lazy } from "react";
 
 // use lazy for better code splitting
@@ -77,6 +78,11 @@ const routes = [
   {
     path: "/customer-order/:id",
     component: CustomerOrder,
+  },
+  // justt testings it
+  {
+    path: "/compose-email/:id", // New route for ComposeEmail component
+    component: ComposeEmail,
   },
   {
     path: "/our-staff",

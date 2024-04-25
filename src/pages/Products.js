@@ -39,39 +39,57 @@ import ProductDrawer from "components/drawer/ProductDrawer";
 import ProductServices from "services/ProductServices";
 import useAsync from "hooks/useAsync";
 import requests from "services/httpService";
+import useFilter from "hooks/useFilter";
+import Loading from "components/preloader/Loading";
 // import categoryData from "utils/categories";
 const Products = () => {
   const { title, allId, serviceId, handleDeleteMany, handleUpdateMany } =
     useToggleDrawer();
-  const { data, loading } = useAsync(ProductServices.getAllProducts);
-
+  // const { data, loading } = useAsync(ProductServices.getAllProducts);
   // const data = { products: productData }
-  //console.log("hi:", productData)
   const { t } = useTranslation();
   const {
     toggleDrawer,
     lang,
     // currentPage,
-    handleChangePage,
-    searchText,
-    // category,
+    // handleChangePage,
+    // searchText,
+    category,
     setCategory,
-    searchRef,
-    handleSubmitForAll,
+    // searchRef,
+    // handleSubmitForAll,
     // sortedField,
-    setSortedField,
-    limitData,
+    // setSortedField,
+    // limitData,
+    // totalResults,
   } = useContext(SidebarContext);
-
-  // const { data, loading } = useAsync(() =>
-  //   ProductServices.getAllProducts({
-  //     page: currentPage,
-  //     limit: limitData,
-  //     category: category,
-  //     title: searchText,
-  //     price: sortedField,
-  //   })
-  // );
+  const { data, loading } = useAsync(() =>
+    ProductServices.getAllProducts({
+      page: currentPage,
+      limit: limitData,
+      category: category,
+      title: searchText,
+      price: sortedField,
+    })
+  );
+  console.log("hi:", data)
+  const {
+    totalResults,
+    resultsPerPage,
+    handleChangePage,
+    dataTable,
+    serviceData,
+    globalSetting,
+    searchRef,
+    sortedField,
+    setSortedField,
+    currentPage,
+    searchText,
+    limitData,
+    // Added By : Govinda 04/23/2023 sidecontext to usefilters
+    handleSubmitForAll,
+  } = useFilter(data?.products);
+  // const {  } = useFilter(data?.products);
 
   // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
   // const currency = globalSetting?.default_currency || "$";
@@ -91,22 +109,25 @@ const Products = () => {
     }
     // console.log("ids : ", setIsCheck)
   };
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("products customers detials...");
-        const response = await requests.get('/api/products');
-        console.log("products fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
-  // console.log('productss',products)
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("products customers detials...");
+  //       const response = await requests.get('/api/products');
+  //       console.log("products fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
+  // // console.log('productss', categories?.stock)
+  // const firstProductQuantity = categories.products[0].quantity;
+  // console.log(firstProductQuantity); // This will output 15
+
   // const {
   //   serviceData,
   //   filename,
@@ -238,58 +259,67 @@ const Products = () => {
         </CardBody>
       </Card>
 
-      {false ? (
-        <TableLoading row={12} col={7} width={160} height={20} />
-      ) : true
-        // serviceData?.length !== 0
-        ?
-        (
-          <TableContainer className="mb-8 rounded-b-lg">
-            <Table>
-              <TableHeader>
-                <tr>
-                  <TableCell>
-                    <CheckBox
-                      type="checkbox"
-                      name="selectAll"
-                      id="selectAll"
-                      isChecked={isCheckAll}
-                      handleClick={handleSelectAll}
-                    />
-                  </TableCell>
-                  <TableCell>{t("ProductNameTbl")}</TableCell>
-                  <TableCell>{t("CategoryTbl")}</TableCell>
-                  <TableCell>{t("PriceTbl")}</TableCell>
-                  <TableCell>Sale Price</TableCell>
-                  <TableCell>{t("StockTbl")}</TableCell>
-                  <TableCell>{t("StatusTbl")}</TableCell>
-                  <TableCell className="text-center">{t("DetailsTbl")}</TableCell>
-                  <TableCell className="text-center">
-                    {t("PublishedTbl")}
-                  </TableCell>
-                  <TableCell className="text-right">{t("ActionsTbl")}</TableCell>
-                </tr>
-              </TableHeader>
-              <ProductTable
-                lang={lang}
-                isCheck={isCheck}
-                products={data?.products}
-                setIsCheck={setIsCheck}
-                currency={'$'}
-              />
-            </Table>
-            <TableFooter>
-              <Pagination
-                totalResults={data?.products?.length}
-                resultsPerPage={limitData}
-                onChange={handleChangePage}
-                label="Product Page Navigation"
-              />
-            </TableFooter>
-          </TableContainer>
-        ) : (
-          <NotFound title="Product" />
-        )}
+      {
+        loading
+          // false
+          ? (
+            <TableLoading row={12} col={7} width={160} height={20} />
+          ) :
+          // true
+          serviceData?.length !== 0
+            ?
+            (
+              <TableContainer className="mb-8 rounded-b-lg">
+                <Table>
+                  <TableHeader>
+                    <tr>
+                      <TableCell>
+                        <CheckBox
+                          type="checkbox"
+                          name="selectAll"
+                          id="selectAll"
+                          isChecked={isCheckAll}
+                          handleClick={handleSelectAll}
+                        />
+                      </TableCell>
+                      <TableCell>{t("ProductNameTbl")}</TableCell>
+                      <TableCell>{t("CategoryTbl")}</TableCell>
+                      <TableCell>{t("PriceTbl")}</TableCell>
+                      <TableCell>Sale Price</TableCell>
+                      <TableCell>{t("StockTbl")}</TableCell>
+                      <TableCell>{t("StatusTbl")}</TableCell>
+                      <TableCell className="text-center">{t("DetailsTbl")}</TableCell>
+                      <TableCell className="text-center">
+                        {t("PublishedTbl")}
+                      </TableCell>
+                      <TableCell className="text-right">{t("ActionsTbl")}</TableCell>
+                    </tr>
+                  </TableHeader>
+                  <ProductTable
+                    // data={data}
+                    lang={lang}
+                    isCheck={isCheck}
+                    products={dataTable}
+                    setIsCheck={setIsCheck}
+                    globalSetting={globalSetting}
+                    currency={globalSetting?.default_currency || "$"}
+                    resultsPerPage={resultsPerPage}
+                  />
+                </Table>
+                <TableFooter>
+                  <Pagination
+                    // totalResults={data?.products?.length}
+                    // totalResults={data?.products?.length}
+                    totalResults={totalResults}
+                    resultsPerPage={resultsPerPage}
+                    onChange={handleChangePage}
+                    label="Product Page Navigation"
+                  />
+                </TableFooter>
+              </TableContainer>
+            ) : (
+              <NotFound title="Product" />
+            )}
     </>
   );
 };

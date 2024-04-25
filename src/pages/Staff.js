@@ -50,28 +50,28 @@ const Staff = () => {
     handleChangePage,
     totalResults,
     resultsPerPage,
-    // dataTable,
-    // serviceData,
+    dataTable,
+    serviceData,
     handleSubmitUser,
   } = useFilter(data);
 
 
   const { t } = useTranslation();
-  const [coupons, setCoupons] = useState([]);
-  // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching Coupons...");
-        const response = await requests.get('/api/admin');
-        console.log("admin fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // const [coupons, setCoupons] = useState([]);
+  // // console.log("allID : ", allId)
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching Coupons...");
+  //       const response = await requests.get('/api/admin');
+  //       console.log("admin fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
 
   return (
     <>
@@ -101,12 +101,18 @@ const Staff = () => {
                 onChange={(e) => setRole(e.target.value)}
                 className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
               >
-                <option value="All" defaultValue hidden>
+                <option value="All" defaultValue >
                   {t("StaffRole")}
                 </option>
                 <option value="Admin">{t("StaffRoleAdmin")}</option>
-                <option value="Cashier">{t("SelectCashiers")}</option>
-                <option value="Super Admin">{t("SelectSuperAdmin")}</option>
+                {/* <option value="Cashier">{t("SelectCashiers")}</option> */}
+                {/* <option value="Super Admin">{t("SelectSuperAdmin")}</option> */}
+                {/* Added BY : Govinda on 22/04/2024 */}
+                <option value="CEO">{t("CEO")}</option>
+                <option value="Manager">{t("Manager")}</option>
+                <option value="Accountant">{t("Accountant")}</option>
+                <option value="Driver">{t("Driver")}</option>
+                <option value="Security Guard">{t("Security Guard")}</option>
               </Select>
             </div>
 
@@ -125,39 +131,40 @@ const Staff = () => {
       {loading ? (
         // <Loading loading={loading} />
         <TableLoading row={12} col={7} width={163} height={20} />
-      ) : true
-        // serviceData?.length !== 0 
-        ? (
-          <TableContainer className="mb-8 rounded-b-lg">
-            <Table>
-              <TableHeader>
-                <tr>
-                  <TableCell>{t("StaffNameTbl")}</TableCell>
-                  <TableCell>{t("StaffEmailTbl")}</TableCell>
-                  <TableCell>{t("StaffContactTbl")}</TableCell>
-                  <TableCell>{t("StaffJoiningDateTbl")}</TableCell>
-                  <TableCell>{t("StaffRoleTbl")}</TableCell>
-                  <TableCell className="text-center">{t("OderStatusTbl")}</TableCell>
-                  <TableCell className="text-center">{t("PublishedTbl")}</TableCell>
+      ) :
+        //  true
+        serviceData?.length !== 0
+          ? (
+            <TableContainer className="mb-8 rounded-b-lg">
+              <Table>
+                <TableHeader>
+                  <tr>
+                    <TableCell>{t("StaffNameTbl")}</TableCell>
+                    <TableCell>{t("StaffEmailTbl")}</TableCell>
+                    <TableCell>{t("StaffContactTbl")}</TableCell>
+                    <TableCell>{t("StaffJoiningDateTbl")}</TableCell>
+                    <TableCell>{t("StaffRoleTbl")}</TableCell>
+                    <TableCell className="text-center">{t("OderStatusTbl")}</TableCell>
+                    {/* <TableCell className="text-center">{t("PublishedTbl")}</TableCell> */}
 
-                  <TableCell className="text-right">{t("StaffActionsTbl")}</TableCell>
-                </tr>
-              </TableHeader>
+                    <TableCell className="text-right">{t("StaffActionsTbl")}</TableCell>
+                  </tr>
+                </TableHeader>
 
-              <StaffTable staffs={data} lang={lang} />
-            </Table>
-            <TableFooter>
-              <Pagination
-                totalResults={totalResults}
-                resultsPerPage={resultsPerPage}
-                onChange={handleChangePage}
-                label="Table navigation"
-              />
-            </TableFooter>
-          </TableContainer>
-        ) : (
-          <NotFound title="Sorry, There are no staff right now." />
-        )}
+                <StaffTable staffs={dataTable} lang={lang} />
+              </Table>
+              <TableFooter>
+                <Pagination
+                  totalResults={totalResults}
+                  resultsPerPage={resultsPerPage}
+                  onChange={handleChangePage}
+                  label="Table navigation"
+                />
+              </TableFooter>
+            </TableContainer>
+          ) : (
+            <NotFound title="Sorry, There are no staff right now." />
+          )}
     </>
   );
 };

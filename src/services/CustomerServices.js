@@ -74,6 +74,10 @@ const CustomerServices = {
     console.log("data : ", body)
     return requests.put(`/api/customer/${id}`, body);
   },
+  sendEmail: async (emailData) => {
+    console.log("emails :", emailData)
+    requests.post("/api/customer/send-email", emailData);
+  },
   deleteCustomer: async (id) => {
     return requests.delete(`/api/customer/${id}`);
   },

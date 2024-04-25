@@ -283,7 +283,9 @@ const Attributes = () => {
                   lang={lang}
                   isCheck={isCheck}
                   setIsCheck={setIsCheck}
-                  attributes={data}
+                  // now this reflects in the search
+                  attributes={dataTable}
+                // attributes={data}
                 />
               </Table>
               <TableFooter>

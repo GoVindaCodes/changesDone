@@ -34,42 +34,65 @@ import requests from "services/httpService";
 
 const Orders = () => {
   const {
+    limitData,
     // time,
-    setTime,
+    // setTime,
     // currentPage,
     // searchText,
-    searchRef,
+    // searchRef,
     // status,
-    setStatus,
-    handleChangePage,
+    // setStatus,
+    // handleChangePage,
     handleSubmitForAll,
     // resultsPerPage,
     // startDate,
-    setStartDate,
+    // setStartDate,
     // endDate,
-    setEndDate,
+    // setEndDate,
     lang,
+    // totalResults,
   } = useContext(SidebarContext);
 
   const { t } = useTranslation();
   const [loadingExport, setLoadingExport] = useState(false);
 
-  // const { data, loading } = useAsync(() =>
-  //   OrderServices.getAllOrders({
-  //     // customerName: searchText,
-  //     // status,
-  //     // page: currentPage,
-  //     // limit: resultsPerPage,
-  //     // day: time,
-  //     // startDate,
-  //     // endDate,
-  //   })
-  // );
+  const { data, loading } = useAsync(() =>
+    OrderServices.getAllOrders({
+      customerName: searchText,
+      status,
+      page: currentPage,
+      limit: resultsPerPage,
+      day: time,
+      startDate,
+      endDate,
+    })
+  );
   // const data = { orders: orderData };
-  const { data, loading } = useAsync(OrderServices.getAllOrders);
-  console.log("datas :", data)
-  const { dataTable, serviceData, globalSetting } = useFilter(data?.orders);
-  console.log("datas.orders :", data?.orders);
+  // const { data, loading } = useAsync(OrderServices.getAllOrders);
+  // console.log("datas :", data)
+  const {
+    dataTable,
+    serviceData,
+    totalResults,
+    resultsPerPage,
+    globalSetting,
+    handleChangePage,
+    searchRef,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    time,
+    setTime,
+    searchText,
+    status,
+    setStatus,
+    currentPage,
+    orderRef,
+    handleSubmitOrder,
+  } = useFilter(data?.orders);
+  // console.log("datas.orders :", data?.orders);
+  // console.log("datas.orders :", dataTable);
   const handleDownloadOrders = async () => {
     try {
       setLoadingExport(true);
@@ -112,9 +135,9 @@ const Orders = () => {
       notifyError(err ? err?.response?.data?.message : err.message);
     }
   };
-  console.log("data in orders page", data);
-  console.log("data in data.orders page", data?.orders);
-  console.log("data in data table page", dataTable);
+  // console.log("data in orders page", data);
+  // console.log("data in data.orders page", data?.orders);
+  // console.log("data in data table page", dataTable);
   // const [coupons, setCoupons] = useState([]);
   // // console.log("allID : ", allId)
   // useEffect(() => {
@@ -138,11 +161,13 @@ const Orders = () => {
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
         <CardBody>
-          <form onSubmit={handleSubmitForAll}>
+          {/*  Added By : Govinda 04/23/2023 orderRef instead of search ref */}
+          <form onSubmit={handleSubmitOrder}>
             <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
               <div>
                 <Input
-                  ref={searchRef}
+                  // Added By : Govinda 04/23/2023 orderRef instead of search ref
+                  ref={orderRef}
                   type="search"
                   name="search"
                   className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 border-transparent focus:bg-white"
@@ -238,13 +263,13 @@ const Orders = () => {
       </Card>
 
       {
-        // loading
-        false
+        loading
+          // false
           ? (
             <TableLoading row={12} col={7} width={160} height={20} />
           ) :
-          //  serviceData?.length !== 0 
-          true
+          serviceData?.length !== 0
+            // true
             ? (
               <TableContainer className="mb-8 dark:bg-gray-900">
                 <Table>
@@ -262,6 +287,7 @@ const Orders = () => {
                   </TableHeader>
 
                   <OrderTable
+                    // data={data}
                     lang={lang}
                     orders={dataTable}
                     globalSetting={globalSetting}
@@ -270,19 +296,20 @@ const Orders = () => {
                 </Table>
 
                 <TableFooter>
-                  {/* <Pagination
-                    totalResults={data?.orders.length}
-                    resultsPerPage={2}
+                  {/* added by : Govinda 04/22/204 */}
+                  <Pagination
+                    totalResults={totalResults}
+                    resultsPerPage={resultsPerPage}
                     onChange={handleChangePage}
                     label="Table navigation"
-                  /> */}
+                  />
                   {/* this works  */}
-                  <Pagination
+                  {/* <Pagination
                     totalResults={data?.totalDoc}
                     resultsPerPage={handleChangePage}
                     onChange={handleChangePage}
                     label="Table navigation"
-                  />
+                  /> */}
                 </TableFooter>
               </TableContainer>
             ) : (

@@ -87,7 +87,7 @@ const useFilter = (data) => {
   const [role, setRole] = useState("");
   const [time, setTime] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataTable, setDataTable] = useState([]); //tableTable for showing on table according to filtering
+  const [dataTable, setDataTable] = useState([]); //DataTable for showing on table according to filtering
   const [todayOrder, setTodayOrder] = useState("");
   const [monthlyOrder, setMonthlyOrder] = useState("");
   const [totalOrder, setTotalOrder] = useState("");
@@ -108,12 +108,13 @@ const useFilter = (data) => {
   const taxRef = useRef("");
   const shippingRef = useRef("");
 
+
   dayjs.extend(isBetween);
   dayjs.extend(isToday);
   const location = useLocation();
   const { lang, setIsUpdate, setLoading } = useContext(SidebarContext);
   const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-  console.log(" datas from filters : ", data)
+  // console.log(" datas from filters : ", data)
   //service data filtering
   const serviceData = useMemo(() => {
     const date = new Date();
@@ -197,15 +198,66 @@ const useFilter = (data) => {
       );
     }
 
+    // original Logics of categories before
+    // if (categoryType) {
+    //   services = services.filter(
+    //     (search) =>
+    //       search?.parent[lang]
+    //         ?.toLowerCase()
+    //         ?.includes(categoryType?.toLowerCase()) ||
+    //       search?.category?.toLowerCase().includes(categoryType?.toLowerCase())
+    //   );
+    // }
+
+
+    // if (categoryType) {
+    //   services = services.filter(
+    //     (search) => {
+    //       const parentCategory = search?.name[lang]?.toLowerCase();
+    //       const category = search?.category?.toLowerCase();
+    //       const searchValue = categoryType?.toLowerCase();
+    //       const parentCategoryIncludes = parentCategory?.includes(searchValue);
+    //       const categoryIncludes = category?.includes(searchValue);
+
+    //       console.log("Parent Category:", parentCategory);
+    //       console.log("Category:", category);
+    //       console.log("Search Value:", searchValue);
+    //       console.log("Parent Category Includes:", parentCategoryIncludes);
+    //       console.log("Category Includes:", categoryIncludes);
+
+    //       return parentCategoryIncludes || categoryIncludes;
+    //     }
+    //   );
+    // }
+
+
+    // just added to test the datas replace with original logic when needed
     if (categoryType) {
-      services = services.filter(
-        (search) =>
-          search?.name[lang]
-            ?.toLowerCase()
-            ?.includes(categoryType?.toLowerCase()) ||
-          search?.category?.toLowerCase().includes(categoryType?.toLowerCase())
-      );
+      services = services.filter(category => {
+        const { parent, children } = category;
+        const lowercaseCategoryType = categoryType.toLowerCase();
+
+        console.log("Category:", category);
+        console.log("Lowercase Category Type:", lowercaseCategoryType);
+
+        // Check if the parent category matches
+        if (parent && parent.toLowerCase().includes(lowercaseCategoryType)) {
+          console.log("Parent Category Matched:", parent);
+          return true;
+        }
+
+        // Check if any of the children categories match
+        if (children && children.some(child => child.toLowerCase().includes(lowercaseCategoryType))) {
+          console.log("Child Category Matched:", children);
+          return true;
+        }
+
+        return false;
+      });
     }
+
+
+
 
     //admin Filtering
     if (role) {
@@ -222,6 +274,7 @@ const useFilter = (data) => {
           search?.email?.toLowerCase().includes(searchUser.toLowerCase())
       );
     }
+
     //Coupon filtering
     if (searchCoupon) {
       services = services?.filter(
@@ -239,8 +292,9 @@ const useFilter = (data) => {
       services = services.filter((order) => order.status === status);
     }
     if (searchOrder) {
-      services = services.filter((search) =>
-        search.contact.toLowerCase().includes(searchOrder.toLowerCase())
+      services = services.filter((order) =>
+        // Added By : Govinda 04/23/2023 just for thiss dataa
+        order.user_info.name.toLowerCase().includes(searchOrder.toLowerCase())
       );
     }
     if (time) {
@@ -265,21 +319,47 @@ const useFilter = (data) => {
       );
     }
 
+    // previous Logics
+
     //language filtering
+    // if (language) {
+    //   services = services.filter(
+    //     (lan) =>
+    //       lan.name.toLowerCase().includes(language.toLowerCase()) ||
+    //       lan.iso_code.toLowerCase().includes(language.toLowerCase()) ||
+    //       lan.language_code.toLowerCase().includes(language.toLowerCase())
+    //   );
+    // }
+
+    // Added By : Govinda 4/04/2024
+
     if (language) {
-      services = services.filter(
-        (lan) =>
-          lan.name.toLowerCase().includes(language.toLowerCase()) ||
-          lan.iso_code.toLowerCase().includes(language.toLowerCase()) ||
-          lan.language_code.toLowerCase().includes(language.toLowerCase())
-      );
+      services = services.filter((lan) => {
+        const name = lan.name ? lan.name.toLowerCase() : '';
+        const isoCode = lan.iso_code ? lan.iso_code.toLowerCase() : '';
+        const languageCode = lan.language_code ? lan.language_code.toLowerCase() : '';
+
+        return name.includes(language.toLowerCase()) ||
+          isoCode.includes(language.toLowerCase()) ||
+          languageCode.includes(language.toLowerCase());
+      });
     }
+    // Added By : Govinda 4/04/2024
 
     if (currency) {
-      services = services.filter((cur) =>
-        cur.iso_code.toLowerCase().includes(currency.toLowerCase())
-      );
+      services = services.filter((cur) => {
+        const isoCode = cur && cur.name ? cur.name.toLowerCase() : '';
+        return isoCode.includes(currency.toLowerCase());
+      });
     }
+
+    // previous Logics
+
+    // if (currency) {
+    //   services = services.filter((cur) =>
+    //     cur.iso_code.toLowerCase().includes(currency.toLowerCase())
+    //   );
+    // }
 
     return services;
   }, [
@@ -305,9 +385,10 @@ const useFilter = (data) => {
   ]);
 
   //pagination functionality start
-  const resultsPerPage = 20;
+  const resultsPerPage = 10;
   const totalResults = serviceData?.length;
   const handleChangePage = (p) => {
+    // console.log('Changing page to:', p);
     setCurrentPage(p);
   };
   useEffect(() => {
@@ -321,6 +402,7 @@ const useFilter = (data) => {
   //pagination functionality end
   //table form submit function for search start
   const handleSubmitForAll = (e) => {
+    console.log("hi: ", searchRef.current.value)
     e.preventDefault();
     setSearchText(searchRef.current.value);
   };
@@ -330,13 +412,16 @@ const useFilter = (data) => {
   };
   const handleSubmitCoupon = (e) => {
     e.preventDefault();
+    // console.log("hi : ", couponRef.current.value)
     setSearchCoupon(couponRef.current.value);
   };
   const handleSubmitOrder = (e) => {
+    // console.log("hi : ", orderRef.current.value)
     e.preventDefault();
     setSearchOrder(orderRef.current.value);
   };
   const handleSubmitCategory = (e) => {
+    console.log("hi : ", categoryRef.current.value)
     e.preventDefault();
     setCategoryType(categoryRef.current.value);
   };
@@ -774,7 +859,6 @@ const useFilter = (data) => {
     handleSubmitAttribute,
     handleOnDrop,
     handleUploadProducts,
-
     countryRef,
     country,
     setCountry,

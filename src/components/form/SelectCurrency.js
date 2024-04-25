@@ -10,7 +10,9 @@ const SelectCurrency = ({
   required,
   // loading,
 }) => {
-  const { loading } = useAsync(CurrencyServices.getShowingCurrency);
+  // const { data, loading } = useAsync(CurrencyServices.getAllCurrency);
+  // Added By: Govinda 23 /04 / 2024
+  const { data, loading } = useAsync(CurrencyServices.getAllCurrency);
 
   return (
     <>
@@ -24,11 +26,11 @@ const SelectCurrency = ({
             required: required ? false : `${label} is required!`,
           })}
         >
-          {/* {data?.map((currency) => (
+          {data?.map((currency) => (
             <option key={currency._id} value={`${currency.symbol}`}>
               {currency?.name}
             </option>
-          ))} */}
+          ))}
           <option key={1} value={`$`}>
             Dollar
           </option>

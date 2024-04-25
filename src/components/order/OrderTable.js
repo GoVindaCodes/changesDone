@@ -20,21 +20,21 @@ const OrderTable = ({ orders, currency, globalSetting }) => {
   const { t } = useTranslation();
   // console.log('orders:=>', orders)
   // console.log("data in orders page", data);
-  const [coupons, setCoupons] = useState([]);
-  // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching orders...");
-        const response = await requests.get('/api/orders');
-        console.log("orders fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // const [coupons, setCoupons] = useState([]);
+  // // console.log("allID : ", allId)
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching orders...");
+  //       const response = await requests.get('/api/orders');
+  //       console.log("orders fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
 
   return (
     <>
@@ -55,7 +55,7 @@ const OrderTable = ({ orders, currency, globalSetting }) => {
                   globalSetting?.default_date_format,
                   "h:mm A"
                 )}
-                {order?.updatedDate}
+                {/* {order?.updatedDate} */}
 
               </span>
             </TableCell>

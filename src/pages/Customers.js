@@ -47,21 +47,21 @@ const Customers = () => {
 
   const { t } = useTranslation();
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching customers detials...");
-        const response = await requests.get('/api/customer');
-        console.log("customers fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching customers detials...");
+  //       const response = await requests.get('/api/customer');
+  //       console.log("customers fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
 
   return (
@@ -124,6 +124,7 @@ const Customers = () => {
                 <TableCell>{t("CustomersName")}</TableCell>
                 <TableCell>{t("CustomersEmail")}</TableCell>
                 <TableCell>{t("CustomersPhone")}</TableCell>
+                <TableCell>{t("Mails")}</TableCell>
                 <TableCell className="text-right">
                   {t("CustomersActions")}
                 </TableCell>

@@ -26,18 +26,18 @@ const LanguageTable = ({ languages, isCheck, setIsCheck }) => {
   };
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("Fetching languages... Table");
-        const response = await requests.get('/api/language/show');
-        console.log("Languages fetched successfully from table:", response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       console.log("Fetching languages... Table");
+  //       const response = await requests.get('/api/language/show');
+  //       console.log("Languages fetched successfully from table:", response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
 
 

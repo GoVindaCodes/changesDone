@@ -51,7 +51,7 @@ const Coupons = () => {
   const {
     handleSubmitCoupon,
     couponRef,
-    // dataTable,
+    dataTable,
     // serviceData,
     totalResults,
     resultsPerPage,
@@ -92,21 +92,21 @@ const Coupons = () => {
   //     setIsCheck([]);
   //   }
   // };
-  const [coupons, setCoupons] = useState([]);
+  // const [coupons, setCoupons] = useState([]);
   // console.log("allID : ", allId)
-  useEffect(() => {
-    const fetchLanguages = async () => {
-      try {
-        console.log("Fetching Coupons...");
-        const response = await requests.get('/api/coupon');
-        console.log("Coupons fetched successfully:", response);
-        setCoupons(response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchLanguages();
-  }, []);
+  // useEffect(() => {
+  //   const fetchLanguages = async () => {
+  //     try {
+  //       console.log("Fetching Coupons...");
+  //       const response = await requests.get('/api/coupon');
+  //       console.log("Coupons fetched successfully:", response);
+  //       setCoupons(response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchLanguages();
+  // }, []);
 
   const { t } = useTranslation();
 
@@ -228,7 +228,7 @@ const Coupons = () => {
                       <TableCell className="text-right">{t("CoupTblActions")}</TableCell>
                     </tr>
                   </TableHeader>
-                  <CouponTable lang={lang} isCheck={isCheck} coupons={coupons} setIsCheck={setIsCheck} />
+                  <CouponTable lang={lang} isCheck={isCheck} data={data} coupons={dataTable} setIsCheck={setIsCheck} />
                 </Table>
                 <TableFooter>
                   <Pagination

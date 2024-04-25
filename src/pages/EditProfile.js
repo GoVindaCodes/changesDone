@@ -79,13 +79,17 @@ const EditProfile = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+
+            {/* For now It's Hidden becuase why would admin change his roles from admin ceo to admin suggested by yugam sir */}
+
+            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label={t("ProfileYourRole")} />
               <div className="col-span-8 sm:col-span-4">
                 <SelectRole register={register} label="Role" name="role" />
                 <Error errorName={errors.role} />
               </div>
-            </div>
+            </div> */}
+
           </div>
 
           <div className="flex flex-row-reverse pr-6 pb-6">

@@ -39,6 +39,7 @@ import CategoryDrawer from "components/drawer/CategoryDrawer";
 import requests from "services/httpService";
 import useAsync from "hooks/useAsync";
 import CategoryServices from "services/CategoryServices";
+import Loading from "components/preloader/Loading";
 
 const Category = () => {
   const { toggleDrawer, lang } = useContext(SidebarContext);
@@ -57,15 +58,16 @@ const Category = () => {
     categoryRef,
     totalResults,
     resultsPerPage,
-    // dataTable,
-    // serviceData,
+    dataTable,
+    limitData,
+    serviceData,
     handleChangePage,
     // filename,
     // isDisabled,
     // handleSelectFile,
     // handleUploadMultiple,
     // handleRemoveSelectFile,
-  } = useFilter();
+  } = useFilter(data);
 
   // react hooks
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -90,7 +92,7 @@ const Category = () => {
     setIsCheckAll(!isCheckAll);
 
     if (!isCheckAll) {
-      const selectedIds = categories.map(category => category._id);
+      const selectedIds = data.map(category => category._id);
       console.log("Selected IDs:", selectedIds);
       setIsCheck(selectedIds);
     } else {
@@ -99,27 +101,27 @@ const Category = () => {
     }
   };
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching categories...");
-        const response = await requests.get('/api/category/all');
-        console.log("Categories fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching categories...");
+  //       const response = await requests.get('/api/category/all');
+  //       console.log("Categories fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
 
-    // // Polling mechanism
-    // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
+  // // Polling mechanism
+  // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
 
-    // // Clear interval on unmount
-    // return () => clearInterval(intervalId);
-  }, []);
+  // // Clear interval on unmount
+  // return () => clearInterval(intervalId);
+  // }, []);
   // const handleSubmitCategory = () => { };
   // const categoryRef = useRef();
   // const handleChangePage = () => { };
@@ -132,7 +134,7 @@ const Category = () => {
       <BulkActionDrawer ids={allId} title="Categories" />
 
       <MainDrawer>
-        <CategoryDrawer id={serviceId} categories={categories} lang={lang} />
+        <CategoryDrawer id={serviceId} categories={data} lang={lang} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -216,11 +218,15 @@ const Category = () => {
         processOption={showChild}
         name={showChild}
       />
-      {false ? (
-        <TableLoading row={12} col={6} width={190} height={20} />
-      ) :
-        //  serviceData?.length !== 0 
-        true ?
+      {loading
+        // false
+        ? (
+
+          <TableLoading row={12} col={6} width={190} height={20} />
+        ) :
+        serviceData?.length !== 0
+          // true
+          ?
           (
             <TableContainer className="mb-8">
               <Table>
@@ -249,7 +255,7 @@ const Category = () => {
                   data={data}
                   lang={lang}
                   isCheck={isCheck}
-                  categories={categories}
+                  categories={dataTable}
                   setIsCheck={setIsCheck}
                   showChild={showChild}
                 />
@@ -258,7 +264,9 @@ const Category = () => {
               <TableFooter>
                 <Pagination
                   totalResults={totalResults}
+                  // totalResults={data?.length}
                   resultsPerPage={resultsPerPage}
+                  // resultsPerPage={resultsPerPage}
                   onChange={handleChangePage}
                   label="Table navigation"
                 />

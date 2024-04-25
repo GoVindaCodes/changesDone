@@ -146,6 +146,7 @@ const ProductServices = {
   },
 
   updateProduct: async (id, body) => {
+    console.log("ids and bodyy : ", id, body)
     return requests.patch(`/api/products/${id}`, body);
   },
 

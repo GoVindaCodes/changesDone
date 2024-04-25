@@ -16,6 +16,7 @@ import { notifyError, notifySuccess } from "utils/toast";
 const useBulkActionSubmit = (ids, lang = "en", childId) => {
   const [children, setChildren] = useState("");
   const [tag, setTag] = useState([]);
+  const [quantityy, setQuantity] = useState([]);
   const location = useLocation();
   const [checked, setChecked] = useState("");
   const [published, setPublished] = useState(true);
@@ -45,7 +46,7 @@ const useBulkActionSubmit = (ids, lang = "en", childId) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log('data', data);
+    console.log('data', data);
     try {
       // product data
       const productData = {
@@ -53,7 +54,9 @@ const useBulkActionSubmit = (ids, lang = "en", childId) => {
         categories: selectedCategory?.map((item) => item._id),
         category: defaultCategory[0]?._id,
         productType: [isFoodItem ? "food" : "others"],
-        show: data.show,
+        // show: data.show,
+        quantity: data.quantity,
+        tag: Array.isArray(data.tag) ? data.tag : [],
         status: published ? "show" : "hide",
         tag: JSON.stringify(tag),
       };
@@ -222,6 +225,8 @@ const useBulkActionSubmit = (ids, lang = "en", childId) => {
     errors,
     tag,
     setTag,
+    quantityy,
+    setQuantity,
     published,
     setPublished,
     published2,

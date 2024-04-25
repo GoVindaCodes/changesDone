@@ -456,8 +456,8 @@ const ProductDrawer = ({ id, currency }) => {
           isCombination &&
           variantTitle.length > 0 && (
             <div className="px-6">
-              {/* {variants?.length >= 0 && ( */}
-              {isCombination && (
+              {variants?.length >= 0 && (
+                // {isCombination && (
                 <TableContainer className="md:mb-32 mb-40 rounded-b-lg">
                   <Table>
                     <TableHeader>

@@ -125,43 +125,43 @@ const InvoiceForPrint = ({ data, printRef, globalSetting }) => {
                       </span>
                       {or?.paymentDetails?.selectPaymentOption_Card !==
                         undefined && (
-                        <span className="text-xs bill">
-                          {or?.paymentDetails?.selectPaymentOption_Card}:{" "}
-                          <span className="font-semibold text-gray-900">
-                            {" "}
-                            {currency}
-                            {parseFloat(
-                              or?.paymentDetails?.paymentAmount_Card
-                            ).toFixed(2)}
+                          <span className="text-xs bill">
+                            {or?.paymentDetails?.selectPaymentOption_Card}:{" "}
+                            <span className="font-semibold text-gray-900">
+                              {" "}
+                              {currency}
+                              {parseFloat(
+                                or?.paymentDetails?.paymentAmount_Card
+                              ).toFixed(2)}
+                            </span>
                           </span>
-                        </span>
-                      )}
+                        )}
                       <br />
                       {or?.paymentDetails?.selectPaymentOption_Cash !==
                         undefined && (
-                        <span className="text-xs bill">
-                          {or?.paymentDetails?.selectPaymentOption_Cash}:{" "}
-                          <span className="font-semibold text-gray-900">
-                            {currency}
-                            {parseFloat(
-                              or?.paymentDetails?.paymentAmount_Cash
-                            ).toFixed(2)}
+                          <span className="text-xs bill">
+                            {or?.paymentDetails?.selectPaymentOption_Cash}:{" "}
+                            <span className="font-semibold text-gray-900">
+                              {currency}
+                              {parseFloat(
+                                or?.paymentDetails?.paymentAmount_Cash
+                              ).toFixed(2)}
+                            </span>
                           </span>
-                        </span>
-                      )}
+                        )}
                       <br />
                       {or?.paymentDetails?.selectPaymentOption_Credit !==
                         undefined && (
-                        <span className="text-xs bill">
-                          {or?.paymentDetails?.selectPaymentOption_Credit}:{" "}
-                          <span className="font-semibold text-gray-900">
-                            {currency}
-                            {parseFloat(
-                              or?.paymentDetails?.paymentAmount_Credit
-                            ).toFixed(2)}
+                          <span className="text-xs bill">
+                            {or?.paymentDetails?.selectPaymentOption_Credit}:{" "}
+                            <span className="font-semibold text-gray-900">
+                              {currency}
+                              {parseFloat(
+                                or?.paymentDetails?.paymentAmount_Credit
+                              ).toFixed(2)}
+                            </span>
                           </span>
-                        </span>
-                      )}
+                        )}
                     </p>
                   ) : (
                     <p className="bill">
@@ -370,43 +370,43 @@ const InvoiceForPrint = ({ data, printRef, globalSetting }) => {
                     </span>
                     {data?.paymentDetails?.selectPaymentOption_Card !==
                       undefined && (
-                      <span className="text-xs bill">
-                        {data?.paymentDetails?.selectPaymentOption_Card}:{" "}
-                        <span className="font-semibold text-gray-900">
-                          {" "}
-                          {currency}
-                          {parseFloat(
-                            data?.paymentDetails?.paymentAmount_Card
-                          ).toFixed(2)}
+                        <span className="text-xs bill">
+                          {data?.paymentDetails?.selectPaymentOption_Card}:{" "}
+                          <span className="font-semibold text-gray-900">
+                            {" "}
+                            {currency}
+                            {parseFloat(
+                              data?.paymentDetails?.paymentAmount_Card
+                            ).toFixed(2)}
+                          </span>
                         </span>
-                      </span>
-                    )}
+                      )}
                     <br />
                     {data?.paymentDetails?.selectPaymentOption_Cash !==
                       undefined && (
-                      <span className="text-xs bill">
-                        {data?.paymentDetails?.selectPaymentOption_Cash}:{" "}
-                        <span className="font-semibold text-gray-900">
-                          {currency}
-                          {parseFloat(
-                            data?.paymentDetails?.paymentAmount_Cash
-                          ).toFixed(2)}
+                        <span className="text-xs bill">
+                          {data?.paymentDetails?.selectPaymentOption_Cash}:{" "}
+                          <span className="font-semibold text-gray-900">
+                            {currency}
+                            {parseFloat(
+                              data?.paymentDetails?.paymentAmount_Cash
+                            ).toFixed(2)}
+                          </span>
                         </span>
-                      </span>
-                    )}
+                      )}
                     <br />
                     {data?.paymentDetails?.selectPaymentOption_Credit !==
                       undefined && (
-                      <span className="text-xs bill">
-                        {data?.paymentDetails?.selectPaymentOption_Credit}:{" "}
-                        <span className="font-semibold text-gray-900">
-                          {currency}
-                          {parseFloat(
-                            data?.paymentDetails?.paymentAmount_Credit
-                          ).toFixed(2)}
+                        <span className="text-xs bill">
+                          {data?.paymentDetails?.selectPaymentOption_Credit}:{" "}
+                          <span className="font-semibold text-gray-900">
+                            {currency}
+                            {parseFloat(
+                              data?.paymentDetails?.paymentAmount_Credit
+                            ).toFixed(2)}
+                          </span>
                         </span>
-                      </span>
-                    )}
+                      )}
                   </p>
                 ) : (
                   <p className="bill">

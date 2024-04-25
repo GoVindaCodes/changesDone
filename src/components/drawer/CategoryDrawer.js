@@ -19,7 +19,7 @@ import { showingTranslateValue } from "utils/translate";
 
 const CategoryDrawer = ({ id, data, lang }) => {
   const { t } = useTranslation();
-
+  // console.log("ids: ", id)
   const {
     checked,
     register,
@@ -80,11 +80,34 @@ const CategoryDrawer = ({ id, data, lang }) => {
 
   // Modifications by: Govinda 3 / 4 / 20024
 
+  // const renderCategories = (categories) => {
+  //   let myCategories = [];
+  //   if (categories !== undefined) {
+  //     for (let category of categories) {
+  //       // console.log("categories from Categories Drawer :", category)
+  //       let children = [];
+  //       if (category.children && category.children.length > 0) {
+  //         children = category.children.map(child => ({
+  //           title: showingTranslateValue(child, lang),
+  //           key: child,
+  //         }));
+  //       }
+  //       myCategories.push({
+  //         title: showingTranslateValue(category?.parent, lang),
+  //         key: category._id,
+  //         children: children,
+  //       });
+  //     }
+  //   }
+
+  //   return myCategories;
+  // };
+
   const renderCategories = (categories) => {
     let myCategories = [];
     if (categories !== undefined) {
       for (let category of categories) {
-        // console.log("categories from Categories Drawer :", category)
+        // console.log("categories from Categories Drawer :", category.children)
         let children = [];
         if (category.children && category.children.length > 0) {
           children = category.children.map(child => ({
@@ -102,6 +125,7 @@ const CategoryDrawer = ({ id, data, lang }) => {
 
     return myCategories;
   };
+
 
   // 3rd april tasks
   // const renderCategories = (categories) => {

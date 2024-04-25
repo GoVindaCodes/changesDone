@@ -117,7 +117,12 @@ const CurrencyServices = {
     return requests.get('/api/currency');
   },
 
-  getShowingCurrency: async () => {
+  updatePriorities: async (currencies) => {
+    return requests.patch('/api/currency/update/priorities', currencies);
+  },
+
+  getShowingCurrency: async (data) => {
+    // console.log("datas :", data)
     return requests.get('/api/currency/show');
   },
 

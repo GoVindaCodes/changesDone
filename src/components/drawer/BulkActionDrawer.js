@@ -2,12 +2,14 @@ import ReactTagInput from "@pathofdev/react-tag-input";
 import { Button, Input, Select } from "@windmill/react-ui";
 import ParentCategory from "components/category/ParentCategory";
 import Error from "components/form/Error";
+import InputValueFive from "components/form/InputValueFive";
 import LabelArea from "components/form/LabelArea";
 import SwitchToggle from "components/form/SwitchToggle";
 import TextAreaCom from "components/form/TextAreaCom";
 import Title from "components/form/Title";
 import { SidebarContext } from "context/SidebarContext";
 import useBulkActionSubmit from "hooks/useBulkActionSubmit";
+import { t } from "i18next";
 import Multiselect from "multiselect-react-dropdown";
 import Drawer from "rc-drawer";
 import Tree from "rc-tree";
@@ -49,6 +51,8 @@ const BulkActionDrawer = ({
     setDefaultCategory,
     selectCategoryName,
     setSelectCategoryName,
+    setQuantity,
+    quantityy,
   } = useBulkActionSubmit(ids, lang, childId);
 
   const motion = {
@@ -218,6 +222,27 @@ const BulkActionDrawer = ({
                           tags={tag}
                           onChange={(newTags) => setTag(newTags)}
                         />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
+                      <LabelArea label={t("ProductQuantity")} />
+                      <div className="col-span-8 sm:col-span-4">
+                        <InputValueFive
+                          register={register}
+                          minValue={0}
+                          // defaultValue={0}
+                          label="Quantity"
+                          name="stock"
+                          type="number"
+                          placeholder={t("ProductQuantity")}
+                          quantity={quantityy}
+                          // onChange={(newTags) => setTag(newTags)}
+                          onChange={(newQuantity) => setQuantity(newQuantity)}
+                          required={false} // Setting required prop to false makes the input optional
+                        // required={false}
+                        />
+                        <Error errorName={errors.stock} />
                       </div>
                     </div>
                   </>

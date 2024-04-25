@@ -154,13 +154,17 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/forgot-password') {
+      console.log('Forgot Password form submitted:', verifyEmail); // Log the submitted email address
+
       AdminServices.forgetPassword({ verifyEmail })
         .then((res) => {
           setLoading(false);
+          console.log('Password reset response:', res); // Log the response from the backend
           notifySuccess(res.message);
         })
         .catch((err) => {
           setLoading(false);
+          console.error('Password reset error:', err);
           notifyError(err ? err.response.data.message : err.message);
         });
     }

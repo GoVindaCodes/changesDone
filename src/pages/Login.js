@@ -134,6 +134,24 @@ const Login = () => {
                     {t("CreateAccountTitle")}
                   </Link>
                 </p>
+                {/* Added By : Govinda 4/23/2024  */}
+                {/* For some Reasons link was not working so for it has been changed as button from my side  */}
+                <p className="mt-4">
+                  <button
+                    className="text-sm font-medium text-green-500 dark:text-green-400 hover:underline"
+                    onClick={() => history.push("/forgot-password")}
+                  >
+                    {t("ForgotPassword")}
+                  </button>
+                </p>
+                <p className="mt-1">
+                  <button
+                    className="text-sm font-medium text-green-500 dark:text-green-400 hover:underline"
+                    onClick={() => history.push("/signup")}
+                  >
+                    {t("CreateAccountTitle")}
+                  </button>
+                </p>
               </div>
             </main>
           </div>

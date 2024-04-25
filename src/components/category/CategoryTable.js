@@ -17,6 +17,7 @@ import { Axios } from "axios";
 import { useEffect } from "react";
 import requests from "services/httpService";
 import { showingTranslateValue } from "utils/translate";
+import EditDeleteButtons from "components/table/EditDeleteButtons";
 // import { showingTranslateValue } from "utils/translate";
 
 const CategoryTable = ({
@@ -48,18 +49,18 @@ const CategoryTable = ({
   //   console.log("data : ", child.name[0]);
   // });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("Fetching languages... Table");
-        const response = await requests.get('/api/category/all');
-        // console.log("Categories fetched successfully from table:", response);
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       console.log("Fetching languages... Table");
+  //       const response = await requests.get('/api/category/all');
+  //       // console.log("Categories fetched successfully from table:", response);
+  //     } catch (error) {
+  //       console.error('Error fetching languages:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <>
@@ -74,7 +75,7 @@ const CategoryTable = ({
       </MainDrawer>
 
       <TableBody>
-        {data?.map((category) => (
+        {categories?.map((category) => (
           <TableRow key={category._id}>
             <TableCell>
               <CheckBox
@@ -170,7 +171,7 @@ const CategoryTable = ({
               />
             </TableCell>
             <TableCell>
-              <EditDeleteButton
+              <EditDeleteButtons
                 id={category?._id}
                 parent={category?.parent}
                 isCheck={isCheck}

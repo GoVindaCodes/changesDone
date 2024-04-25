@@ -9,30 +9,39 @@ import useAsync from "hooks/useAsync";
 import useToggleDrawer from "hooks/useToggleDrawer";
 import { t } from "i18next";
 import React, { useEffect, useState } from "react";
-import { FiZoomIn } from "react-icons/fi";
+import { FiMail, FiZoomIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CustomerServices from "services/CustomerServices";
 import requests from "services/httpService";
+import ComposeEmail from "./ComposeEmail";
 // internal imports
 
 const CustomerTable = ({ customers }) => {
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
   const [customer, setCustomer] = useState([]);
   const { data, loading } = useAsync(CustomerServices.getAllCustomers);
+  const [isComposeEmailOpen, setIsComposeEmailOpen] = useState(false);
+  const [recipientEmail, setRecipientEmail] = useState("");
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching categories...");
-        const response = await requests.get('/api/customer');
-        console.log("Categories fetched successfully:", response);
-        setCustomer(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const handleOpenComposeEmail = (email) => {
+    console.log("Opening ComposeEmail component...");
+    setRecipientEmail(email);
+    setIsComposeEmailOpen(true);
+  };
+
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching categories...");
+  //       const response = await requests.get('/api/customer');
+  //       console.log("Categories fetched successfully:", response);
+  //       setCustomer(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   return (
     <>
@@ -64,6 +73,63 @@ const CustomerTable = ({ customers }) => {
             </TableCell>
             <TableCell>
               <span className="text-sm font-medium">{user.phone}</span>
+            </TableCell>
+
+            <TableCell>
+              <TableCell>
+                <Link to={`/compose-email/${user._id}`} onClick={() => handleOpenComposeEmail(user.email)}>
+                  <Tooltip
+                    id="mail"
+                    Icon={FiMail}
+                    title="Mail"
+                    bgColor="#34D399"
+                  />
+                </Link>
+              </TableCell>
+              <div className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
+                {isComposeEmailOpen && (
+                  <ComposeEmail
+                    recipientEmail={user.email}
+                    onClose={() => setIsComposeEmailOpen(false)}
+                  />
+                )}
+              </div>
+              {/* <Link to={`/compose-email/${user._id}`} onClick={() => handleOpenComposeEmail(user.email)}>
+                  <Tooltip
+                    id="mail"
+                    Icon={FiMail}
+                    title="Mail"
+                    bgColor="#34D399"
+                  />
+                </Link>
+              </TableCell>
+              <div className="p-2 cursor-pointer text-gray-400 hover:text-green-600">
+                {isComposeEmailOpen && (
+                  <ComposeEmail
+                    recipientEmail={user.email}
+                    onClose={() => setIsComposeEmailOpen(false)}
+                  />
+                )}
+              </div> */}
+              {/* 
+                <div
+                  className="p-2 cursor-pointer text-gray-400 hover:text-green-600"
+                  onClick={handleOpenComposeEmail}
+                >
+                  <Tooltip
+                    id="mail"
+                    Icon={FiMail}
+                    title="Mail"
+                    bgColor="#34D399"
+                  />
+                </div>
+              </TableCell>
+              {isComposeEmailOpen && (
+                <ComposeEmail
+                  recipientEmail={user.email}
+                  onClose={() => setIsComposeEmailOpen(false)}
+                />
+              )} */}
             </TableCell>
 
             <TableCell>

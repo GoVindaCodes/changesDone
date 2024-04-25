@@ -109,7 +109,10 @@ const useProductSubmit = (id) => {
       setBarcode(data.barcode);
       setSku(data.sku);
       setOriginalPrice(data.originalPrice);
+      // const selectedCategory = [{ "_id": "61b0d3975741dd2e949d53ff", "name": "Snacks & Instant" }];
 
+      // Extracting just the names from the selectedCategory array
+      const categoryNames = selectedCategory.map(category => category.name);
       const generateCustomId = () => {
         const timestamp = Date.now().toString();
         const randomPart = Math.random().toString(36).substr(2, 9);
@@ -124,14 +127,17 @@ const useProductSubmit = (id) => {
         title: data.title,
         description: data.description,
         slug: data.slug,
-        categories: data.parent,
-        category: defaultCategory[0]._id,
-        quantity: data.quantity,
+        categories: JSON.stringify(tag),
+        // category: data.parent,
+        parent: defaultCategory[0].name,
+        // category: data.parent,
+        quantity: data.stock,
         flashsale: data.flashsale,
-        barcode: data.barcode,
+        // barcode: data.barcode,
         image: data.imageUrl,
         stock: data.stock,
-        tag: Array.isArray(data.tag) ? data.tag : [],
+        // tag: data.isArray(data.tag) ? data.tag : [],
+        tag: JSON.stringify(categoryNames),
         price: data.price || 0,
         originalPrice: data.originalPrice || 0,
         variants: isCombination ? updatedVariants : [],
@@ -195,8 +201,10 @@ const useProductSubmit = (id) => {
         // console.log("res is ", res);
         if (isCombination) {
           setUpdatedId(res._id);
-          setValue("title", res.title[language ? language : "en"]);
-          setValue("description", res.description[language ? language : "en"]);
+          // setValue("title", res.title[language ? language : "en"]);
+          setValue("title", res.title);
+          // setValue("description", res.description[language ? language : "en"]);
+          setValue("description", res.description);
           setValue("slug", res.slug);
           setValue("show", res.show);
           setValue("barcode", res.barcode);
@@ -270,7 +278,7 @@ const useProductSubmit = (id) => {
       setValue("productId");
 
       setProductId("");
-      // setValue('show');
+      setValue('show');
       setImageUrl([]);
       setTag([]);
       setVariants([]);
@@ -278,7 +286,7 @@ const useProductSubmit = (id) => {
       setValues({});
       setTotalStock(0);
       setSelectedCategory([]);
-      // setDefaultCategory([]);
+      setDefaultCategory([]);
       if (location.pathname === "/products") {
         resetRefTwo?.current?.resetSelectedValues();
       }
@@ -318,10 +326,12 @@ const useProductSubmit = (id) => {
             setResData(res);
             setSlug(res.slug);
             setUpdatedId(res._id);
-            setValue("title", res.title[language ? language : "en"]);
+            // setValue("title", res.title[language ? language : "en"]);
+            setValue("title", res.title);
             setValue(
               "description",
-              res.description[language ? language : "en"]
+              // res.description[language ? language : "en"]
+              res.description
             );
             setValue("slug", res.slug);
             setValue("show", res.show);
@@ -623,8 +633,10 @@ const useProductSubmit = (id) => {
   const handleSelectLanguage = (lang) => {
     setLanguage(lang);
     if (Object.keys(resData).length > 0) {
-      setValue("title", resData.title[lang ? lang : "en"]);
-      setValue("description", resData.description[lang ? lang : "en"]);
+      // setValue("title", resData.title[lang ? lang : "en"]);
+      setValue("title", resData.title);
+      // setValue("description", resData.description[lang ? lang : "en"]);
+      setValue("description", resData.description);
     }
   };
 
